@@ -1,6 +1,6 @@
 /*
     griffon-neo4j plugin
-    Copyright (C) 2010 Andres Almiray
+    Copyright (C) 2010-2012 Andres Almiray
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,6 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 package griffon.plugins.neo4j
 
 import griffon.core.GriffonApplication
@@ -34,25 +35,10 @@ import org.slf4j.LoggerFactory
  * @author Andres Almiray
  */
 @Singleton
-final class Neo4jConnector {
+final class Neo4jConnector implements Neo4jProvider {
     private bootstrap
 
     private static final Logger LOG = LoggerFactory.getLogger(Neo4jConnector)
-
-    static void enhance(MetaClass mc) {
-        mc.withNeo4j = {Closure closure ->
-            DatabaseHolder.instance.withNeo4j('default', closure)
-        }
-        mc.withNeo4j << {String databaseName, Closure closure ->
-            DatabaseHolder.instance.withNeo4j(databaseName, closure)
-        }
-        mc.withNeo4j << {CallableWithArgs callable ->
-            DatabaseHolder.instance.withNeo4j('default', callable)
-        }
-        mc.withNeo4j << {String databaseName, CallableWithArgs callable ->
-            DatabaseHolder.instance.withNeo4j(databaseName, callable)
-        }
-    }
 
     Object withNeo4j(String databaseName = 'default', Closure closure) {
         return DatabaseHolder.instance.withNeo4j(databaseName, closure)

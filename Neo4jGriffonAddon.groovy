@@ -1,6 +1,6 @@
 /*
     griffon-neo4j plugin
-    Copyright (C) 2010 Andres Almiray
+    Copyright (C) 2010-2012 Andres Almiray
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -16,8 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import griffon.core.GriffonClass
 import griffon.core.GriffonApplication
 import griffon.plugins.neo4j.Neo4jConnector
+import griffon.plugins.neo4j.Neo4jEnhancer
 
 /*
 import org.neo4j.graphdb.Node
@@ -47,16 +49,19 @@ class Neo4jGriffonAddon {
         Neo4jConnector.instance.connect(app, config)
     }
 
+    void addonPostInit(GriffonApplication app) {
+        def types = app.config.griffon?.neo4j?.injectInto ?: ['controller']
+        for(String type : types) {
+            for(GriffonClass gc : app.artifactManager.getClassesOfType(type)) {
+                Neo4jEnhancer.enhance(gc.metaClass)
+            }
+        }
+    }
+
     def events = [
         ShutdownStart: { app ->
             ConfigObject config = Neo4jConnector.instance.createConfig(app)
             Neo4jConnector.instance.disconnect(app, config)
-        },
-        NewInstance: { klass, type, instance ->
-            def types = app.config.griffon?.neo4j?.injectInto ?: ['controller']
-            if(!types.contains(type)) return
-            def mc = app.artifactManager.findGriffonClass(klass).metaClass
-            Neo4jConnector.enhance(mc)
         }
     ]
 }

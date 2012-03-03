@@ -1,6 +1,6 @@
 /*
     griffon-neo4j plugin
-    Copyright (C) 2010 Andres Almiray
+    Copyright (C) 2010-2012 Andres Almiray
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -20,15 +20,7 @@
  * @author Andres Almiray
  */
 
-includeTargets << griffonScript("_GriffonInit")
 includeTargets << griffonScript("_GriffonCreateArtifacts")
-
-// check to see if we already have a Neo4jGriffonAddon
-configText = '''root.'Neo4jGriffonAddon'.addon=true'''
-if(!(builderConfigFile.text.contains(configText))) {
-    println 'Adding Neo4jGriffonAddon to Builder.groovy'
-    builderConfigFile.text += '\n' + configText + '\n'
-}
 
 argsMap = argsMap ?: [:]
 argsMap.skipPackagePrompt = true

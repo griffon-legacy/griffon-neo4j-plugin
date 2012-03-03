@@ -1,6 +1,6 @@
 /*
     griffon-neo4j plugin
-    Copyright (C) 2010 Andres Almiray
+    Copyright (C) 2012 Andres Almiray
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -16,19 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+package griffon.plugins.neo4j;
+
+import groovy.lang.Closure;
+import griffon.util.CallableWithArgs;
+
 /**
  * @author Andres Almiray
  */
+public interface Neo4jProvider {
+    Object withNeo4j(Closure closure);
 
-def eventClosure1 = binding.variables.containsKey('eventSetClasspath') ? eventSetClasspath : {cl->}
-eventSetClasspath = { cl ->
-    eventClosure1(cl)
-    if(compilingPlugin('neo4j')) return
-    griffonSettings.dependencyManager.flatDirResolver name: 'griffon-neo4j-plugin', dirs: "${neo4jPluginDir}/addon"
-    griffonSettings.dependencyManager.addPluginDependency('neo4j', [
-        conf: 'compile',
-        name: 'griffon-neo4j-addon',
-        group: 'org.codehaus.griffon.plugins',
-        version: neo4jPluginVersion
-    ])
+    Object withNeo4j(String databaseName, Closure closure);
+
+    <T> T withNeo4j(CallableWithArgs<T> callable);
+
+    <T> T withNeo4j(String databaseName, CallableWithArgs<T> callable);
 }

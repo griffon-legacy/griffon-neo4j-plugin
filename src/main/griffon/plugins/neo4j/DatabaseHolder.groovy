@@ -1,6 +1,6 @@
 /*
     griffon-neo4j plugin
-    Copyright (C) 2010 Andres Almiray
+    Copyright (C) 2010-2012 Andres Almiray
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,6 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 package griffon.plugins.neo4j
 
 import org.neo4j.graphdb.GraphDatabaseService
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory
  * @author Andres Almiray
  */
 @Singleton
-class DatabaseHolder {
+class DatabaseHolder implements Neo4jProvider {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseHolder)
     private static final Object[] LOCK = new Object[0]
     private final Map<String, GraphDatabaseService> databases = [:]
