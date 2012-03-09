@@ -18,12 +18,9 @@
  * @author Andres Almiray
  */
 
-includeTargets << griffonScript('_GriffonInit')
 includeTargets << griffonScript('_GriffonCreateArtifacts')
 
 target(createRelationshipType: 'Creates a Neo4j RelationshipType enum') {
-    depends(checkVersion, parseArguments)
-
     def type = 'RelationshipType'
     promptForName(type: type)
     def (pkg, name) = extractArtifactName(argsMap['params'][0])
