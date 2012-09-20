@@ -22,6 +22,7 @@ import griffon.core.GriffonApplication
 import griffon.util.Metadata
 import griffon.util.Environment
 import griffon.util.CallableWithArgs
+import griffon.util.ConfigUtils
 
 import org.neo4j.kernel.EmbeddedGraphDatabase
 import org.neo4j.graphdb.GraphDatabaseService
@@ -51,8 +52,7 @@ final class Neo4jConnector implements Neo4jProvider {
     // ======================================================
 
     ConfigObject createConfig(GriffonApplication app) {
-        def databaseClass = app.class.classLoader.loadClass('Neo4jConfig')
-        new ConfigSlurper(Environment.current.name).parse(databaseClass)
+        ConfigUtils.loadConfigWithI18n('Neo4jConfig')
     }
 
     private ConfigObject narrowConfig(ConfigObject config, String databaseName) {
@@ -103,7 +103,7 @@ final class Neo4jConnector implements Neo4jProvider {
                 }
         }
 
-        new EmbeddedGraphDatabase(storeDir.absolutePath, config.params ?: [:])    
+        new EmbeddedGraphDatabase(storeDir.absolutePath, config.params ?: [:])
     }
 
     private void stopNeo4j(ConfigObject config, GraphDatabaseService db) {

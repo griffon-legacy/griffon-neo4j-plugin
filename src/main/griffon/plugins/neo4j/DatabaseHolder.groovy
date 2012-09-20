@@ -50,7 +50,7 @@ class DatabaseHolder implements Neo4jProvider {
 
     void setDatabase(String databaseName = 'default', GraphDatabaseService db) {
         if(isBlank(databaseName)) databaseName = 'default'
-        storeDatabase(databaseName, db)       
+        storeDatabase(databaseName, db)
     }
 
     Object withNeo4j(String databaseName = 'default', Closure closure) {
@@ -66,7 +66,7 @@ class DatabaseHolder implements Neo4jProvider {
         } finally {
             tx.finish()
         }
-        
+
         return result
     }
 
@@ -84,7 +84,7 @@ class DatabaseHolder implements Neo4jProvider {
         } finally {
             tx.finish()
         }
-        
+
         return result
     }
     
@@ -106,7 +106,7 @@ class DatabaseHolder implements Neo4jProvider {
             ConfigObject config = Neo4jConnector.instance.createConfig(app)
             db = Neo4jConnector.instance.connect(app, config, databaseName)
         }
-        
+
         if(db == null) {
             throw new IllegalArgumentException("No such Database configuration for name $databaseName")
         }

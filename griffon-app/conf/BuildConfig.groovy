@@ -7,7 +7,7 @@ griffon.project.dependency.resolution = {
         mavenRepo 'http://repository.sonatype.org/content/groups/public'
     }
     dependencies {
-        compile 'org.neo4j:neo4j:1.6.1'
+        compile 'org.neo4j:neo4j:1.7.2'
     }
 }
 

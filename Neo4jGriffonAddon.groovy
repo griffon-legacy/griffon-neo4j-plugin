@@ -58,7 +58,7 @@ class Neo4jGriffonAddon {
         }
     }
 
-    def events = [
+    Map events = [
         ShutdownStart: { app ->
             ConfigObject config = Neo4jConnector.instance.createConfig(app)
             Neo4jConnector.instance.disconnect(app, config)

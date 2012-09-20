@@ -29,7 +29,7 @@ final class Neo4jEnhancer {
     private static final Logger LOG = LoggerFactory.getLogger(Neo4jEnhancer)
 
     private Neo4jEnhancer() {}
-    
+
     static void enhance(MetaClass mc, Neo4jProvider provider = DatabaseHolder.instance) {
         if(LOG.debugEnabled) LOG.debug("Enhancing $mc with $provider")
         mc.withNeo4j = {Closure closure ->
